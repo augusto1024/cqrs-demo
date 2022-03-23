@@ -1,0 +1,15 @@
+.mainButton {
+  @apply py-2 bg-green-400 text-white rounded-sm hover:bg-green-500 active:bg-green-700 disabled:bg-gray-200 disabled:text-gray-800 disabled:cursor-not-allowed;
+}
+
+.deleteButton {
+  @apply bg-red-300 hover:bg-red-400 hover:text-white active:text-white active:bg-red-500 text-red-800 rounded-sm px-4 py-1;
+}
+
+textarea {
+  @apply border-2 border-gray-500/10 resize-none rounded-sm p-2
+}
+
+.card {
+  @apply rounded-sm p-2 bg-yellow-100 shadow-sm flex justify-between items-center;
+}
