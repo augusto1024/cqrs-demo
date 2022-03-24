@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { v4 as uuid } from 'uuid';
 import './App.css';
 
+const WRITE_API_URL = 'http://localhost:4001';
 const READ_API_URL = 'http://localhost:4000';
 
 type Task = {
@@ -27,10 +29,17 @@ function App() {
     setLoading(true);
 
     try {
-      const task = await axios.post(`${READ_API_URL}/tasks`, {
+      const newTask = {
+        id: uuid(),
         description: taskDescription,
+      };
+
+      await axios.post(`${WRITE_API_URL}/commands`, {
+        commandType: 'create_task',
+        command: newTask,
       });
-      setTasks([...tasks, task.data]);
+
+      setTasks([...tasks, newTask]);
     } catch (err) {
       window.alert('Failed to create task!');
     }
@@ -43,7 +52,12 @@ function App() {
     setLoading(true);
 
     try {
-      await axios.delete(`${READ_API_URL}/tasks/${taskId}`);
+      await axios.post(`${WRITE_API_URL}/commands`, {
+        commandType: 'delete_task',
+        command: {
+          id: taskId,
+        },
+      });
       setTasks(tasks.filter((task) => task.id !== taskId));
     } catch (err) {
       window.alert('Failed to delete task!');
